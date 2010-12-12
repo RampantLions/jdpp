@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="jdpp" default="jar">
+	<patternset id="ignored.files">
+		<exclude name="**/CVS/**"/>
+		<exclude name="**/SCCS/**"/>
+		<exclude name="**/RCS/**"/>
+		<exclude name="**/rcs/**"/>
+		<exclude name="**/.DS_Store/**"/>
+		<exclude name="**/.svn/**"/>
+	</patternset>
+
+
+	<dirname property="base.dir" file="${ant.file}"/>
+
+	<property file="build.properties"/>
+
+	<property name="src.dir" value="${base.dir}/src"/>
+
+	<property name="build.dir" value="${base.dir}/build"/>
+	<property name="compile.output.dir" value="${build.dir}/classes"/>
+
+	<property name="lib.dir" value="${base.dir}/lib"/>
+
+	<property name="jar.file" value="${ant.project.name}-${version}.jar"/>
+	<property name="jar.nodeps.file" value="${ant.project.name}-nodeps-${version}.jar"/>
+	<property name="jar.sources.file" value="${ant.project.name}-${version}-sources.jar"/>
+
+	<path id="classpath.path">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+		<file file="${base.dir}/ant.jar"/>
+	</path>
+
+
+	<target name="clean">
+		<delete dir="${build.dir}"/>
+	</target>
+
+
+	<target name="compile" depends="clean">
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${compile.output.dir}"/>
+		<javac destdir="${compile.output.dir}" debug="${compiler.debug}" nowarn="off" fork="true">
+			<classpath refid="classpath.path"/>
+			<src path="${src.dir}"/>
+			<patternset refid="ignored.files"/>
+		</javac>
+	</target>
+
+
+	<target name="jar" depends="compile">
+		<jar jarfile="${jar.sources.file}">
+			<fileset dir="${src.dir}" includes="jdpp/**/*"/>
+		</jar>
+
+		<jar jarfile="${jar.nodeps.file}">
+			<fileset dir="${compile.output.dir}" includes="jdpp/**/*"/>
+		</jar>
+
+		<unjar dest="${compile.output.dir}">
+			<fileset dir="${lib.dir}">
+				<include name="**/*.jar"/>
+			</fileset>
+		</unjar>
+
+		<jar jarfile="${jar.file}">
+			<fileset dir="${compile.output.dir}" includes="jdpp/**/*"/>
+		</jar>
+	</target>
+</project>
