@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<project name="jdpp" default="jar">
+<project name="jdpp" default="jars">
 	<patternset id="ignored.files">
 		<exclude name="**/CVS/**"/>
 		<exclude name="**/SCCS/**"/>
@@ -17,7 +17,6 @@
 	<property name="src.dir" value="${base.dir}/src"/>
 
 	<property name="build.dir" value="${base.dir}/build"/>
-	<property name="compile.output.dir" value="${build.dir}/classes"/>
 
 	<property name="lib.dir" value="${base.dir}/lib"/>
 
@@ -40,8 +39,7 @@
 
 	<target name="compile" depends="clean">
 		<mkdir dir="${build.dir}"/>
-		<mkdir dir="${compile.output.dir}"/>
-		<javac destdir="${compile.output.dir}" debug="${compiler.debug}" nowarn="off" fork="true">
+		<javac destdir="${build.dir}" debug="${compiler.debug}" nowarn="off" fork="true">
 			<classpath refid="classpath.path"/>
 			<src path="${src.dir}"/>
 			<patternset refid="ignored.files"/>
@@ -49,23 +47,23 @@
 	</target>
 
 
-	<target name="jar" depends="compile">
+	<target name="jars" depends="compile">
 		<jar jarfile="${jar.sources.file}">
 			<fileset dir="${src.dir}" includes="jdpp/**/*"/>
 		</jar>
 
 		<jar jarfile="${jar.nodeps.file}">
-			<fileset dir="${compile.output.dir}" includes="jdpp/**/*"/>
+			<fileset dir="${build.dir}" includes="jdpp/**/*"/>
 		</jar>
 
-		<unjar dest="${compile.output.dir}">
+		<unjar dest="${build.dir}">
 			<fileset dir="${lib.dir}">
 				<include name="**/*.jar"/>
 			</fileset>
 		</unjar>
 
 		<jar jarfile="${jar.file}">
-			<fileset dir="${compile.output.dir}" includes="jdpp/**/*"/>
+			<fileset dir="${build.dir}"/>
 		</jar>
 	</target>
 </project>
