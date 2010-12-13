@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
  * <p/>
  * Subclasses determine the behavior of the transformation by implementing {@link #transformClassDoc(String, String)}.
  *
- * @author <a href="mailto:erik.beeson@gmail.com">Erik Beeson</a>
+ * @author <a href="http://code.google.com/p/jdpp/">Erik Beeson</a>
  */
 public abstract class JavadocPreprocessor extends Task {
 	private static final Pattern COMMENT_PARAMETER = Pattern.compile("^\\s*\\* @", Pattern.MULTILINE);

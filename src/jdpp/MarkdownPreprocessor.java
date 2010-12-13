@@ -7,7 +7,7 @@ import com.petebevin.markdown.MarkdownProcessor;
  * <p/>
  * Built on <a href="http://code.google.com/p/markdownj/">MarkdownJ</a>.
  *
- * @author <a href="mailto:erik.beeson@gmail.com">Erik Beeson</a>
+ * @author <a href="http://code.google.com/p/jdpp/">Erik Beeson</a>
  */
 public class MarkdownPreprocessor extends JavadocPreprocessor {
 	private static final MarkdownProcessor markdown = new MarkdownProcessor();
